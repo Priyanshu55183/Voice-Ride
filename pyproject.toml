@@ -37,16 +37,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Phase 2: Voice + NLU
+# Phase 2: Voice + NLU (all you need: mic input, OpenAI for STT+NLU, and TTS)
 voice = [
-    "openai-whisper>=20240930",
-    "sounddevice>=0.5",
-    "webrtcvad>=2.0",
+    "SpeechRecognition>=3.10",
+    "PyAudio>=0.2.14",
     "pyttsx3>=2.90",
-]
-nlu = [
-    "chromadb>=0.5",
-    "sentence-transformers>=3.0",
     "openai>=1.40",
     "anthropic>=0.30",
 ]
@@ -60,7 +55,7 @@ dashboard = [
 ]
 # Everything
 all = [
-    "voiceride[voice,nlu,appium,dashboard]",
+    "voiceride[voice,appium,dashboard]",
 ]
 
 [project.scripts]

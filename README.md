@@ -108,6 +108,30 @@ python -m voiceride.cli status
 python -m voiceride.cli status --run-id <run-id>
 ```
 
+### Usage (Phase 2 — Voice Mode)
+
+```bash
+# Install voice dependencies
+pip install voiceride[voice]
+
+# Set your LLM API key in .env
+# OPENAI_API_KEY=sk-... or ANTHROPIC_API_KEY=sk-ant-...
+
+# Enter voice-activated mode (continuous loop)
+python -m voiceride.cli voice
+
+# Single-command mode (listen once, book, exit)
+python -m voiceride.cli voice --once
+
+# With headless browser
+python -m voiceride.cli voice --headless
+```
+
+In voice mode, just speak naturally:
+- "Book a cab from Mekhri Circle to BMSIT College"
+- "I need an auto from Koramangala to Indiranagar"
+- "Mujhe Mekhri Circle se BMSIT le chalo" (Hindi-English works too)
+
 ### Session Storage
 
 Uber login sessions are stored as Playwright persistent browser contexts in `data/uber_session/`. This directory contains cookies and localStorage — treat it as sensitive. It is gitignored.
@@ -118,8 +142,8 @@ For API keys and tokens, VoiceRide uses the OS keyring (Windows Credential Manag
 
 | Phase | Status | Description |
 |-------|--------|-------------|
-| 1 | 🔨 In Progress | Uber-only pipeline, manual CLI trigger |
-| 2 | ⏳ Planned | Voice input (Whisper) + NLU (LLM) + TTS |
+| 1 | ✅ Done | Uber-only pipeline, manual CLI trigger |
+| 2 | 🔨 In Progress | Voice input (Whisper) + NLU (LLM) + TTS |
 | 3 | ⏳ Planned | Add Ola via Appium |
 | 4 | ⏳ Planned | Parallel dispatch + first-confirm-wins + cancel-others |
 | 5 | ⏳ Planned | Add Rapido via Appium |
@@ -130,7 +154,7 @@ For API keys and tokens, VoiceRide uses the OS keyring (Windows Credential Manag
 ```
 Voice-Ride/
 ├── voiceride/
-│   ├── cli.py                  # CLI commands (book, status)
+│   ├── cli.py                  # CLI commands (book, status, voice)
 │   ├── config.py               # Settings from .env
 │   ├── logging_config.py       # Structured logging setup
 │   ├── orchestrator/
@@ -138,6 +162,13 @@ Voice-Ride/
 │   │   ├── state_machine.py    # Booking run lifecycle
 │   │   ├── dispatcher.py       # Parallel platform dispatch
 │   │   └── first_confirm.py    # First-confirm + cancel-others
+│   ├── voice/                  # Phase 2: Voice I/O
+│   │   ├── listener.py         # Microphone capture + WebRTC VAD
+│   │   ├── stt.py              # Whisper speech-to-text (local)
+│   │   └── tts.py              # pyttsx3 text-to-speech
+│   ├── nlu/                    # Phase 2: Natural Language Understanding
+│   │   ├── intent.py           # LLM-based intent extraction
+│   │   └── prompts.py          # System prompts for the LLM
 │   ├── platforms/
 │   │   ├── base.py             # Abstract adapter interface
 │   │   └── uber/

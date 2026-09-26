@@ -66,6 +66,29 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     anthropic_api_key: str = ""
 
+    llm_model: str = "gpt-4o-mini"
+    """OpenAI model to use for intent extraction."""
+
+    llm_model_anthropic: str = "claude-sonnet-4-20250514"
+    """Anthropic model to use for intent extraction."""
+
+    # ── Voice / STT (Phase 2) ──
+    whisper_language: str | None = None
+    """Language hint for Whisper API (e.g., 'en', 'hi'). None = auto-detect."""
+
+    silence_timeout: float = 1.5
+    """Seconds of silence after speech before stopping recording."""
+
+    # ── TTS (Phase 2) ──
+    tts_rate: int = 175
+    """pyttsx3 speech rate in words per minute."""
+
+    tts_volume: float = 0.9
+    """pyttsx3 volume (0.0 to 1.0)."""
+
+    tts_enabled: bool = True
+    """Enable/disable TTS announcements."""
+
     # ── Appium (Phase 3+) ──
     appium_host: str = "http://localhost:4723"
     """Appium server URL for mobile automation."""
