@@ -1,0 +1,41 @@
+# ── Secrets & Environment ──
+.env
+.env.*
+!.env.example
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual Environment ──
+venv/
+.venv/
+env/
+
+# ── Runtime Data (generated at runtime, not committed) ──
+data/voiceride.db
+data/uber_session/
+data/chromadb/
+logs/
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── OS ──
+Thumbs.db
+.DS_Store
+
+# ── Playwright ──
+playwright-report/
+test-results/
+
+# ── Appium ──
+appium_screenshots/

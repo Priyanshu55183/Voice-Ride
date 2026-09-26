@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voiceride"
+version = "0.1.0"
+description = "Personal voice assistant for parallel multi-app cab booking with first-driver-found auto-cancel"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+dependencies = [
+    # ── Core / Orchestration ──
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.8",
+    "pydantic-settings>=2.4",
+    "python-dotenv>=1.0",
+    "typer>=0.12",
+
+    # ── Browser Automation (Uber) ──
+    "playwright>=1.45",
+
+    # ── Database ──
+    "aiosqlite>=0.20",
+
+    # ── Logging ──
+    "structlog>=24.0",
+    "rich>=13.0",
+
+    # ── Secrets ──
+    "keyring>=25.0",
+
+    # ── Notifications ──
+    "plyer>=2.1",
+]
+
+[project.optional-dependencies]
+# Phase 2: Voice + NLU
+voice = [
+    "openai-whisper>=20240930",
+    "sounddevice>=0.5",
+    "webrtcvad>=2.0",
+    "pyttsx3>=2.90",
+]
+nlu = [
+    "chromadb>=0.5",
+    "sentence-transformers>=3.0",
+    "openai>=1.40",
+    "anthropic>=0.30",
+]
+# Phase 3+: Mobile automation
+appium = [
+    "Appium-Python-Client>=4.0",
+]
+# Phase 6: Dashboard
+dashboard = [
+    "streamlit>=1.37",
+]
+# Everything
+all = [
+    "voiceride[voice,nlu,appium,dashboard]",
+]
+
+[project.scripts]
+voiceride = "voiceride.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["voiceride*"]
